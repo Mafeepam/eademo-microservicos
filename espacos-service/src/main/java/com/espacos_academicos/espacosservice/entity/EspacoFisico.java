@@ -1,5 +1,7 @@
-package com.espacos_academicos.espacosservice.model;
+package com.espacos_academicos.espacosservice.entity;
 
+import com.espacos_academicos.espacosservice.model.StatusEspaco;
+import com.espacos_academicos.espacosservice.model.TipoEspaco;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
