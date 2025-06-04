@@ -7,7 +7,8 @@
         <groupId>com.espacos_academicos</groupId>
         <artifactId>eademo-microsservicos-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath> </parent>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
 
     <artifactId>usuarios-service</artifactId>
     <name>usuarios-service</name>
@@ -36,16 +37,19 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- Esta dependência org.springframework.boot:spring-boot é geralmente transitiva
+             e pode não ser necessária explicitamente. Se quiser, pode tentar remover. -->
+        <!--
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot</artifactId>
         </dependency>
+        -->
     </dependencies>
 
     <build>
@@ -53,6 +57,15 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+            <!-- ADICIONE ESTE PLUGIN -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <parameters>true</parameters>
+                </configuration>
             </plugin>
         </plugins>
     </build>
