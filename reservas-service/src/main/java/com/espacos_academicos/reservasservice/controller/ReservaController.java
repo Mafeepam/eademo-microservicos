@@ -15,7 +15,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/reservas")
+@RequestMapping("/api/reservas")
 public class ReservaController {
 
     @Autowired
@@ -28,7 +28,7 @@ public class ReservaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ReservaResponseDTO> buscarReservaPorId(@PathVariable Long id) {
+    public ResponseEntity<ReservaResponseDTO> buscarReservaPorId(@PathVariable(name = "id") Long id) {
         ReservaResponseDTO reserva = reservaService.buscarReservaPorId(id);
         return ResponseEntity.ok(reserva);
     }

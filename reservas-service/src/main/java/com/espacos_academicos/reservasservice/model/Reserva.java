@@ -1,11 +1,6 @@
 package com.espacos_academicos.reservasservice.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.FutureOrPresent;
-import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -15,57 +10,82 @@ import java.time.OffsetDateTime;
 
 @Entity
 @Table(name = "reservas", schema = "reservas_schema")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class Reserva {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "Data da reserva é obrigatória")
-    @FutureOrPresent(message = "Data da reserva deve ser no presente ou futuro")
     @Column(nullable = false)
     private LocalDate data;
 
-    @NotNull(message = "Hora de início é obrigatória")
-    @Column(nullable = false)
+    @Column(name = "hora_inicio", nullable = false)
     private LocalTime horaInicio;
 
-    @NotNull(message = "Hora de fim é obrigatória")
-    @Column(nullable = false)
+    @Column(name = "hora_fim", nullable = false)
     private LocalTime horaFim;
 
-    @NotNull(message = "ID do Professor é obrigatório")
-    @Column(nullable = false)
+    @Column(name = "professor_id", nullable = false)
     private Integer professorId;
 
-    @NotNull(message = "ID do Espaço é obrigatório")
-    @Column(nullable = false)
+    @Column(name = "espaco_id", nullable = false)
     private Long espacoId;
 
-    @Lob
     private String observacao;
 
-    @NotNull(message = "Status da reserva é obrigatório")
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 50)
     private StatusReserva status = StatusReserva.SOLICITADA;
 
     @CreationTimestamp
-    @Column(nullable = false, updatable = false)
+    @Column(name = "data_criacao")
     private OffsetDateTime dataCriacao;
 
     @UpdateTimestamp
-    @Column(nullable = false)
+    @Column(name = "data_atualizacao")
     private OffsetDateTime dataAtualizacao;
 
-    @PrePersist
-    @PreUpdate
-    private void verificarHorario() {
-        if (horaInicio != null && horaFim != null && !horaFim.isAfter(horaInicio)) {
-            throw new IllegalArgumentException("A hora de fim deve ser após a hora de início.");
-        }
+    // Construtores
+    public Reserva() {}
+
+    public Reserva(LocalDate data, LocalTime horaInicio, LocalTime horaFim, 
+                   Integer professorId, Long espacoId, String observacao) {
+        this.data = data;
+        this.horaInicio = horaInicio;
+        this.horaFim = horaFim;
+        this.professorId = professorId;
+        this.espacoId = espacoId;
+        this.observacao = observacao;
+        this.status = StatusReserva.SOLICITADA;
     }
+
+    // Getters e Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public LocalDate getData() { return data; }
+    public void setData(LocalDate data) { this.data = data; }
+
+    public LocalTime getHoraInicio() { return horaInicio; }
+    public void setHoraInicio(LocalTime horaInicio) { this.horaInicio = horaInicio; }
+
+    public LocalTime getHoraFim() { return horaFim; }
+    public void setHoraFim(LocalTime horaFim) { this.horaFim = horaFim; }
+
+    public Integer getProfessorId() { return professorId; }
+    public void setProfessorId(Integer professorId) { this.professorId = professorId; }
+
+    public Long getEspacoId() { return espacoId; }
+    public void setEspacoId(Long espacoId) { this.espacoId = espacoId; }
+
+    public String getObservacao() { return observacao; }
+    public void setObservacao(String observacao) { this.observacao = observacao; }
+
+    public StatusReserva getStatus() { return status; }
+    public void setStatus(StatusReserva status) { this.status = status; }
+
+    public OffsetDateTime getDataCriacao() { return dataCriacao; }
+    public void setDataCriacao(OffsetDateTime dataCriacao) { this.dataCriacao = dataCriacao; }
+
+    public OffsetDateTime getDataAtualizacao() { return dataAtualizacao; }
+    public void setDataAtualizacao(OffsetDateTime dataAtualizacao) { this.dataAtualizacao = dataAtualizacao; }
 }
